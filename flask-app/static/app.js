@@ -212,6 +212,8 @@ war_list = []
 //Joe changes
 ///////////////
 
+var tbody = d3.select("tbody");
+
 // Select the button
 var button = d3.select("#filter-btn");
 
@@ -221,6 +223,14 @@ var form = d3.select("#filters");
 // Create event handlers 
 button.on("click", runEnter);
 form.on("submit",runEnter);
+
+tableData.forEach((tableData) => {
+  var row = tbody.append("tr");
+  Object.entries(tableData).forEach(([key, value]) => {
+    var cell = row.append("td");
+    cell.text(value);
+  });
+}); 
 
 // Complete the event handler function for the form
 
@@ -233,73 +243,112 @@ function runEnter() {
     var inputElement = d3.select("#startYear");
     var inputElement2 = d3.select("#endYear");
     var inputElement3 = d3.select("#person");
-    //var inputElement4 = d3.select("#country");
-    //var inputElement5 = d3.select("#shape");
+    var inputElement4 = d3.select("#movie");
+    var inputElement5 = d3.select("#rating");
+    var inputElement6 = d3.select("#genre");
   
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
     var inputValue2 = inputElement2.property("value");
     var inputValue3 = inputElement3.property("value");
-    //var inputValue4 = inputElement4.property("value");
-    //var inputValue5 = inputElement5.property("value");
+    var inputValue4 = inputElement4.property("value");
+    var inputValue5 = inputElement5.property("value");
+    var inputValue6 = inputElement6.property("value");
   
     console.log(inputValue);
     console.log(inputValue2);
-    //console.log(inputValue3.length);
-    //console.log(inputValue4.length);
-    //console.log(inputValue5.length);
+    console.log(inputValue3);
+    console.log(inputValue4);
+    console.log(inputValue5);
+    console.log(inputValue6);
   
-    //filter by 1st criteria
-    if (inputValue >= 1894 && inputValue <= 2020 && inputValue < inputValue2) {
+    //Start year and End year both valid years, and start < end
+    if (inputValue >= 1894 && inputValue <= 2020 && inputValue2 >=1894 && inputValue2 <= 2020 && inputValue < inputValue2) 
+    {
       var filteredData = movieData.filter(movieData => movieData.startYear >= inputValue);
-      var filteredData2 = filteredData.filter(filteredData => filteredData.startYear <= inputValue2);
-      console.log("We use the main IF");
-      console.log(filteredData2);
+      var filteredData = filteredData.filter(filteredData => filteredData.startYear <= inputValue2);
+      console.log("Start year and end year given:", inputValue, inputValue2);
+      console.log(filteredData);
     }
+    //Valid start year, no end year
+    else if (inputValue >= 1894 && inputValue <= 2020 && inputValue2.length < 1)
+    {
+      var filteredData = movieData.filter(movieData => movieData.startYear >= inputValue);
+      console.log("Only Start Year given:", inputValue);
+      console.log(filteredData);
+    }
+    //No start year, only end year
+    else if (inputValue.length < 1 && inputValue2 >= 1894 && inputValue2 <= 2020)
+    {
+      var filteredData = movieData.filter(movieData => movieData.startYear <= inputValue2);
+      console.log("Only End Year given:", inputValue);
+      console.log(filteredData);
+    } 
+    //no years to be filtered by
     else {
-      //var filteredData = tableData.value[startYear];
-      console.log("we used the ELSE");
+      var filteredData = movieData;
+      console.log("No year filter given");
+      console.log(filteredData);
     };
 
      //filter by person
     if (inputValue3.length >= 1) {
-      var filteredData = movieData.filter(movieData => movieData.Name == inputValue3);
+      var filteredData = filteredData.filter(filteredData => filteredData.Name.toUpperCase() == inputValue3.toUpperCase());
+      console.log("Person value entered:", inputValue3);
       console.log(filteredData);
     }
+    //no person filter
     else {
       var filteredData = filteredData;
-    };
-/*
-    //filter by 3rd criteria
-    if (inputValue3.length >= 1) {
-      var filteredData = filteredData.filter(filteredData => filteredData.city == inputValue3);
-    }
-    else {
-      var filteredData = filteredData;
+      console.log("No Person value entered");
+      console.log(filteredData);
     };
 
-    //filter by 4th criteria
+    //filter by Movie title
     if (inputValue4.length >= 1) {
-      var filteredData = filteredData.filter(filteredData => filteredData.country == inputValue4);
+      var filteredData = filteredData.filter(filteredData => filteredData.movieTitle.toUpperCase() == inputValue4.toUpperCase());
+      console.log("Movie value entered:", inputValue4);
+      console.log(filteredData);
     }
+    //no movie title filter
     else {
       var filteredData = filteredData;
+      console.log("No Movie value entered");
+      console.log(filteredData);
     };
 
-    //filter by 5th criteria
+    //filter by rating
     if (inputValue5.length >= 1) {
-      var filteredData = filteredData.filter(filteredData => filteredData.shape == inputValue5);
+      var filteredData = filteredData.filter(filteredData => filteredData.averageRating >= inputValue5);
+      console.log("Rating value entered:", inputValue5);
+      console.log(filteredData);
     }
+    //no rating filter
     else {
       var filteredData = filteredData;
+      console.log("No Rating value entered");
+      console.log(filteredData);
+    };
+
+    //filter by genre
+    if (inputValue6.length >= 1) {
+      var filteredData = filteredData.filter(filteredData => filteredData.genres.includes(inputValue6));
+      console.log("Genre value entered:", inputValue6);
+      console.log(filteredData);
+    }
+    //no genre filter
+    else {
+      var filteredData = filteredData;
+      console.log("No Genre value entered");
+      console.log(filteredData);
     };
 
 
- */
+
      console.log(filteredData);
 
- /*    //Clear the table before refreshing filtered data on the screen
-    var table = document.getElementById("ufo-table");
+    //Clear the table before refreshing filtered data on the screen
+    var table = document.getElementById("movie-table");
     for (var i = table.rows.length - 1; i > 0; i--)
     {
       table.deleteRow(i);
@@ -312,7 +361,7 @@ function runEnter() {
           var cell = row.append("td");
           cell.text(value);
         });
-      });    */
+      });    
 };
 
 ///////////////////////

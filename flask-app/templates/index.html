@@ -40,15 +40,15 @@
                         <input class="form-control" id="startYear" type="number" placeholder="2015">
                         <label for="endYear">Enter a Ending Year</label>
                         <input class="form-control" id="endYear" type="number" placeholder="2015">
-                        <label for="person">Enter a Person (Actor/Actress/Directory)</label>
+                        <label for="person">Enter a Person (Actor/Actress/Director)</label>
                         <input class="form-control" id="person" type="text" placeholder="Brad Pitt">
-<!--                        <label for="state">Enter a Movie Title</label>
-                        <input class="form-control" id="state" type="text" placeholder="ca">
-                        <label for="country">Enter a country</label>
-                        <input class="form-control" id="country" type="text" placeholder="us">
-                        <label for="shape">Enter a shape</label>
-                        <input class="form-control" id="shape" type="text" placeholder="circle">
- -->                      </li>
+                        <label for="movie">Enter a Movie Title</label>
+                        <input class="form-control" id="movie" type="text" placeholder="Casablanca">
+                        <label for="rating">Enter a min Rating</label>
+                        <input class="form-control" id="rating" type="number" placeholder="7.0">
+                        <label for="genre">Enter a Genre</label>
+                        <input class="form-control" id="genre" type="text" placeholder="Horror">
+                      </li>
                     </ul>
                   </div>
                   <button id="filter-btn" type="button" class="btn btn-default">Filter Table</button>
@@ -56,6 +56,26 @@
               </div>
             </div>
           </aside>
+        </div>
+        <div class="col-md-10">
+          <div id="table-area" class="">
+            <table id="movie-table" class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="table-head">Name</th>
+                  <th class="table-head">Average Rating</th>
+                  <th class="table-head">Characters</th>
+                  <th class="table-head">Genres</th>
+                  <th class="table-head">Title</th>
+                  <th class="table-head">Number of Votes</th>
+                  <th class="table-head">Role</th>
+                  <th class="table-head">Run Time (Minutes)</th>
+                  <th class="table-head">Year</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div id="svg-area"></div>
