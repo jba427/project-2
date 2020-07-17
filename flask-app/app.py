@@ -18,7 +18,7 @@ mytable = mydb['movies']
 @app.route('/data')   
 def data():
     # movie_data = mytable.find({}, {'_id':0})
-    movie_data = mytable.find({"startYear": 1929}, {'_id':0})
+    movie_data = mytable.find({}, {'_id':0})
 
     l = list(movie_data)
     return jsonify(l)
