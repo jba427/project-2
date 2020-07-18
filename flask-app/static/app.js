@@ -379,26 +379,19 @@ function runEnter() {
 
     
     
-    /*
     filteredData.forEach((filteredData) => {
-      Object.entries(filteredData).forEach( ([key, value] ) => {
-        listData.push([value]);
+      DumbList = []
+      Lister = Object.entries(filteredData).forEach( ([key, value] ) => {
+        DumbList.push(value);
       });
+      listData.push(DumbList)
     });
-    */
-
-    
-    listData.push(filteredData);
-    var obj = JSON.parse(listData);
-
-    console.log("This is the listData");
-    console.log(obj);
 
 
     $(document).ready(function() {
       $('#movie-table').DataTable({
         retrieve: true,
-        data: filteredData
+        data: listData
         ,
         columns: [
           {title: "Name"},
