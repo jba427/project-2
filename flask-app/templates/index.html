@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylsheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -59,7 +60,39 @@
         </div>
         <div class="col-md-10">
           <div id="table-area" class="">
-            <table id="movie-table" class="table table-striped">
+     
+      <table id="movie-table" class="table datatable">
+         <thead>
+             <tr>
+                 <th data-field="Name" data-sortable="true">Name</th>
+                 <th data-field="averageRating" data-sortable="true">Average Rating</th>
+                 <th data-field="characters" data-sortable="true">Characters</th>
+                 <th data-field="genres" data-sortable="true">Genres</th>
+                 <th data-field="movieTitle" data-sortable="true">Movie Title</th>
+                 <th data-field="numVotes" data-sortable="true">Number of Votes</th>
+                 <th data-field="role" data-sortable="true">Role</th>
+                 <th data-field="runtimeMinutes" data-sortable="true">Duration</th>
+                 <th data-field="startYear" data-sortable="true">Year</th>
+             </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+             </tr>
+         </tbody>
+     </table>
+
+
+
+<!--             <table id="movie-table" class="table table-striped">
               <thead>
                 <tr>
                   <th class="table-head">Name</th>
@@ -75,14 +108,16 @@
               </thead>
               <tbody></tbody>
             </table>
-          </div>
+ -->          </div>
         </div>
       </div>
       <div id="svg-area"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
   <script src="../static/app.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
-
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://raw.github.com/douglascrockford/JSON-js/master/json2.js"></script>
 <script src="{{url_for('static', filename='app.js')}}"></script>
 </body>
 

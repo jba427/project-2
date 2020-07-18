@@ -224,13 +224,15 @@ var form = d3.select("#filters");
 button.on("click", runEnter);
 form.on("submit",runEnter);
 
-tableData.forEach((tableData) => {
+/*
+movieData.forEach((movieData) => {
   var row = tbody.append("tr");
-  Object.entries(tableData).forEach(([key, value]) => {
+  Object.entries(movieData).forEach(([key, value]) => {
     var cell = row.append("td");
     cell.text(value);
   });
 }); 
+*/
 
 // Complete the event handler function for the form
 
@@ -268,6 +270,13 @@ function runEnter() {
       var filteredData = movieData.filter(movieData => movieData.startYear >= inputValue);
       var filteredData = filteredData.filter(filteredData => filteredData.startYear <= inputValue2);
       console.log("Start year and end year given:", inputValue, inputValue2);
+      console.log(filteredData);
+    }
+    //Start year and End year both valid years, and start = end
+    else if (inputValue >= 1894 && inputValue <= 2020 && inputValue2 >=1894 && inputValue2 <= 2020 && inputValue == inputValue2) 
+    {
+      var filteredData = movieData.filter(movieData => movieData.startYear == inputValue);
+      console.log("Start year and end year are the same:", inputValue, inputValue2);
       console.log(filteredData);
     }
     //Valid start year, no end year
@@ -347,7 +356,9 @@ function runEnter() {
 
      console.log(filteredData);
 
-    //Clear the table before refreshing filtered data on the screen
+    
+    /*
+     //Clear the table before refreshing filtered data on the screen
     var table = document.getElementById("movie-table");
     for (var i = table.rows.length - 1; i > 0; i--)
     {
@@ -362,6 +373,46 @@ function runEnter() {
           cell.text(value);
         });
       });    
+    */
+
+    listData = [];
+
+    
+    
+    /*
+    filteredData.forEach((filteredData) => {
+      Object.entries(filteredData).forEach( ([key, value] ) => {
+        listData.push([value]);
+      });
+    });
+    */
+
+    
+    listData.push(filteredData);
+    var obj = JSON.parse(listData);
+
+    console.log("This is the listData");
+    console.log(obj);
+
+
+    $(document).ready(function() {
+      $('#movie-table').DataTable({
+        retrieve: true,
+        data: filteredData
+        ,
+        columns: [
+          {title: "Name"},
+          {title: "averageRating"},
+          {title: "characters"},
+          {title: "genres"},
+          {title: "movieTitle"},
+          {title: "numVotes"},
+          {title: "role"},
+          {title: "runtimeMinutes"},
+          {title: "startYear"},
+        ] 
+      });
+    });
 };
 
 ///////////////////////
