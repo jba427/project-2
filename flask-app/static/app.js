@@ -56,18 +56,7 @@ var form = d3.select("#filters");
 button.on("click", runEnter);
 form.on("submit",runEnter);
 
-/*
-movieData.forEach((movieData) => {
-  var row = tbody.append("tr");
-  Object.entries(movieData).forEach(([key, value]) => {
-    var cell = row.append("td");
-    cell.text(value);
-  });
-}); 
-*/
-
 // Complete the event handler function for the form
-
 function runEnter() {
     
     // Prevent the page from refreshing
@@ -186,32 +175,10 @@ function runEnter() {
       console.log(filteredData);
     };
 
-
-
     console.log(filteredData);
       drawBar(filteredData)
     
-    /*
-     //Clear the table before refreshing filtered data on the screen
-    var table = document.getElementById("movie-table");
-    for (var i = table.rows.length - 1; i > 0; i--)
-    {
-      table.deleteRow(i);
-    }
-
-    
-    filteredData.forEach((filteredData) => {
-        var row = tbody.append("tr");
-        Object.entries(filteredData).forEach(([key, value]) => {
-          var cell = row.append("td");
-          cell.text(value);
-        });
-      });    
-    */
-
     listData = [];
-
-    
     
     filteredData.forEach((filteredData) => {
       DumbList = []
@@ -221,12 +188,10 @@ function runEnter() {
       listData.push(DumbList)
     });
 
-
     $(document).ready(function() {
       $('#movie-table').DataTable({
         retrieve: true,
-        data: listData
-        ,
+        data: listData,
         columns: [
           {title: "Name"},
           {title: "averageRating"},
@@ -241,6 +206,7 @@ function runEnter() {
       });
     });
 };
+
 function drawBar(Fdata){
   var horror_fil = function(val){
     return val == `Horror`
