@@ -14,20 +14,13 @@ client = MongoClient('mongodb://localhost:27017/')
 mydb = client['moviesDB2']
 mytable = mydb['movies']
 
+@app.route('/')
 
-@app.route('/data')   
-def data():
-    # movie_data = mytable.find({}, {'_id':0})
-    movie_data = mytable.find({}, {'_id':0})
+def home():
+    movie_data = mytable.find({"startYear": 1929}, {'_id':0})
 
     l = list(movie_data)
-    return jsonify(l)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
+    return dumps(l)
     # movie_list = []
     # movie_dict = {}
     # for document in movie_data:
