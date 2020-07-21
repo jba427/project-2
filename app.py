@@ -19,13 +19,13 @@ app = Flask(__name__)
 ## mytable = mydb['movies']
 
 
-@app.route('/data')   
-def data():
-    # movie_data = mytable.find({}, {'_id':0})
-    movie_data = mytable.find({}, {'_id':0})
+# @app.route('/data')   
+# def data():
+#     # movie_data = mytable.find({}, {'_id':0})
+#     movie_data = mytable.find({}, {'_id':0})
 
-    l = list(movie_data)
-    return jsonify(l)
+#     l = list(movie_data)
+#     return jsonify(l)
 
 @app.route('/')
 def index():
