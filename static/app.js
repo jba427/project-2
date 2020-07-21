@@ -21,7 +21,7 @@ var chartHeight = svgHeight - margin.top - margin.bottom;
 // Step 3:
 // Import data from the movie json
 // =================================
-d3.json("data.json").then(function(movieData) {
+d3.json("film_data.json").then(function(movieData) {
 
 
 drawBar(movieData)
