@@ -22,23 +22,10 @@ var chartHeight = svgHeight - margin.top - margin.bottom;
 // Import data from the movie json
 // =================================
 d3.json("/data").then(function(movieData) {
-  // Step 4: Parse the data
-  // Format the data and convert to numerical and date values
-  // =================================
-  // Create a function to parse date and time
-  // var parseTime = d3.timeParse("%d-%b");
 
-    // genre_lists = all_genre.forEach(function(data){
-    //   horror_list = filterItems(data, "horror")
-    //   console.log(horror_list)
-    // })
-    // console.log(horror_list)
 
-//  console.log(horror_list)
 drawBar(movieData)
-  // console.log(movieData)
-  // Step 5: Create the scales for the chart
-  // =================================
+
 
 ///////////////
 //Joe changes
@@ -58,7 +45,7 @@ form.on("submit",runEnter);
 
 // Complete the event handler function for the form
 function runEnter() {
-    
+    filteredData = []
     // Prevent the page from refreshing
     d3.event.preventDefault();
     
@@ -70,8 +57,7 @@ function runEnter() {
     var inputElement5 = d3.select("#rating");
     var inputElement6 = d3.select("#genre");
   
-    d3.select("svg").remove()
-
+    d3.selectAll("svg").remove()
     // Get the value property of the input element
     var inputValue = inputElement.property("value");
     var inputValue2 = inputElement2.property("value");
@@ -251,11 +237,16 @@ function drawBar(Fdata){
   noir_list = []
   family_list = []
   war_list = []
+  film_list = []
+  year_list = []
+  rating_list = []
   
     Fdata.forEach(function(data) {
       data.startYear = +data.startYear;
       all_genre = data.genres.split(",")
-      
+      title = data.movieTitle
+      rating = data.averageRating
+
       horror = all_genre.filter(horror_fil)
       romance = all_genre.filter(rom_fil)
       comedy = all_genre.filter(comedy_fil)
@@ -266,7 +257,10 @@ function drawBar(Fdata){
       noir = all_genre.filter(noir_fil)
       fam = all_genre.filter(fam_fil)
       war = all_genre.filter(war_fil)
-      
+     
+      rating_list.push(rating)
+      year_list.push(data.startYear)
+      film_list.push(title)
       horror_list.push(horror)
       romance_list.push(romance)
       comedy_list.push(comedy)
@@ -277,15 +271,9 @@ function drawBar(Fdata){
       noir_list.push(noir)
       family_list.push(fam)
       war_list.push(war)
-  
-      // genre_lists = all_genre.forEach(function(data){
-      //   horror_list = filterItems(data, "horror")
-      //   console.log(horror_list)
-      // })
-      // console.log(horror_list)
+
     });
-  //  console.log(horror_list)
-  
+
     horror_stat = horror_list.filter(horror_fil).length
     romance_stat = romance_list.filter(rom_fil).length
     action_stat = action_list.filter(action_fil).length
@@ -297,6 +285,8 @@ function drawBar(Fdata){
     fam_stat = family_list.filter(fam_fil).length
     war_stat = war_list.filter(war_fil).length
   
+
+    // console.log(year_list)
     console.log("Romance Stat:" + romance_stat)
     console.log("Action stat:" + action_stat)
     console.log("Comedy stat:" + comedy_stat)
@@ -318,6 +308,29 @@ function drawBar(Fdata){
       {"genre":"war", "count": war_stat}
     ]
     
+    Array.prototype.unique = function() {
+      var a = this.concat();
+      for(var i=0; i<a.length; ++i) {
+          for(var j=i+1; j<a.length; ++j) {
+              if(a[i] === a[j])
+                  a.splice(j--, 1);
+          }
+      }
+  
+      return a;
+  };
+
+  var combinedObj = year_list.map(function(x, i){
+    return {"year":x, "rating":rating_list[i], "title":film_list[i]}
+  });
+
+ var stringarray = combinedObj.map(JSON.stringify)
+ var uniqueStringArray = new Set(stringarray)
+
+ let uniqueArray = Array.from(uniqueStringArray, JSON.parse)
+  
+  
+
     console.log(genreDict)
     var genres = [];
     var actors = [];
@@ -339,15 +352,37 @@ function drawBar(Fdata){
        });
     });
     
-  
-  
-  
-    // var mapped = genreDict.map(d =>{
-    //   return {
-    //     genre: Object.keys(d),
-    //     count: d[Object.keys[0]]
-    // //   }
-    // });
+    console.log(uniqueArray)
+
+
+// Go into Each part of uniqueArray average out all the review scores by year
+const result = [];
+
+outer: for(const {  year, rating,} of uniqueArray) {
+   for(const other of result) {
+      if(year === other.year) {
+        other.rating.push(+rating);
+
+        continue outer;
+      }
+   }
+   result.push({ year, rating: [+rating]});
+}
+
+for(const group of result)
+  group.rating = group.rating.reduce((a, b) => a + b, 0) / group.rating.length;
+ 
+var sorted_result = result.sort((a, b) =>{
+    return a.year - b.year
+  })
+
+  console.log(sorted_result)
+    var parseTime = d3.timeParse("%Y");    
+
+    sorted_result.forEach(function(data){
+      data.year = parseTime(data.year)
+      data.rating = +data.rating
+    })
     // Step 1: Set up our chart
   //= ================================
   var svgWidth = 960;
@@ -364,26 +399,62 @@ function drawBar(Fdata){
   var chartHeight = svgHeight - margin.top - margin.bottom;
   
 //SVG WRAPPER
-  var svg = d3.select("#svg-area")
-    .append("svg")
-    .attr("height", svgHeight)
-    .attr("width", svgWidth);
+
+var svg2 = d3.select("#svg-area2")
+.append("svg")
+.attr("height", svgHeight)
+.attr("width", svgWidth);
+
+////MAKING RATING/TIME CHART
+
+var chartGroup2 = svg2.append("g")
+.attr("transform", `translate(${margin.left}, ${margin.top})`)
   
+
   
-  var chartGroup = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    var xTimeScale = d3.scaleTime()
+    .range([0, chartWidth])
+    .domain(d3.extent(sorted_result, data => data.year));
   
-  // Step 3:
-  // Import data from the movie json
-  // =================================
+  var yLinearScale2 = d3.scaleLinear()
+    .range([chartHeight, 0])
+    .domain([0, d3.max(sorted_result, data => data.rating)]);
   
-    console.log(genres)
-    console.log(actors)
+    bottomAxis2 = d3.axisBottom(xTimeScale)
+    leftAxis2 = d3.axisLeft(yLinearScale2)
     
-    //change scaling to actually work properly, its not rn
-    console.log(genreDict.count)
+    var drawLine = d3
+      .line()
+      .x(data => xTimeScale(data.year))
+      .y(data => yLinearScale2(data.rating));
+  
+    // Append an SVG path and plot its points using the line function
+    chartGroup2.append("path")
+      // The drawLine function returns the instructions for creating the line for milesData
+      .attr("d", drawLine(sorted_result))
+      .classed("line", true);
+  
+      chartGroup2.append("g")
+      .classed("axis", true)
+      .call(leftAxis2);
+      
+  
+      chartGroup2.append("g")
+      .classed("axis", true)
+      .attr("transform", "translate(0, " + chartHeight + ")")
+      .call(bottomAxis2);
+  
+
     
-    
+//Making Genre Chart
+var svg = d3.select("#svg-area")
+.append("svg")
+.attr("height", svgHeight)
+.attr("width", svgWidth);
+
+var chartGroup = svg.append("g")
+.attr("transform", `translate(${margin.left}, ${margin.top})`);
+
     var xBandScale = d3.scaleBand()
     .domain(genreDict.map(d => d.genre))
     .range([0, chartWidth])
@@ -394,15 +465,15 @@ function drawBar(Fdata){
     .domain([0, d3.max(genreDict, d => d.count)])
     .range([chartHeight, 0]);
     
-    var bottomAxis = d3.axisBottom(xBandScale);
-    var leftAxis = d3.axisLeft(yLinearScale).ticks(10);
+    var barBottomAxis = d3.axisBottom(xBandScale);
+    var barLeftAxis = d3.axisLeft(yLinearScale).ticks(10);
     
     chartGroup.append("g")
-    .call(leftAxis);
+    .call(barLeftAxis);
     
     chartGroup.append("g")
     .attr("transform", `translate(0, ${chartHeight})`)
-    .call(bottomAxis);
+    .call(barBottomAxis);
     
     
     chartGroup.selectAll(".bar")
@@ -430,9 +501,5 @@ function drawBar(Fdata){
   }).catch(function(error) {
   console.log(error);
 });
-
-// d3.json('/data')
-// .then(function(data){
-//   if (err) throw err;
 
 

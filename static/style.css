@@ -18,6 +18,12 @@ body {
   overflow: auto;
 }
 
+path.line
+{
+    fill: none;
+    stroke: #000;
+}
+
 /* The footer is positioned at the bottom of the page */
 .footer {
   position: absolute;
