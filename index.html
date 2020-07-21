@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Film Info</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylsheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">IMDB Movies Database Search
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div id="svg-area"></div>
+    <div id="svg-area2"></div>
+    <div class="container">
+      <div class="row margin-top-50">
+        <div class="col-md-2">
+          <aside class="filters">
+            <div class="panel panel-default">
+              <div class="panel-heading">Filter Search</div>
+              <div class="panel-body">
+                <form>
+                  <div class="form-group">
+                    <ul class="list-group" id="filters">
+                      <li class="filter list-group-item">
+                        <label for="startYear">Enter a Starting Year</label>
+                        <input class="form-control" id="startYear" type="number" placeholder="2015">
+                        <label for="endYear">Enter a Ending Year</label>
+                        <input class="form-control" id="endYear" type="number" placeholder="2015">
+                        <label for="person">Enter a Person (Actor/Actress/Director)</label>
+                        <input class="form-control" id="person" type="text" placeholder="Brad Pitt">
+                        <label for="movie">Enter a Movie Title</label>
+                        <input class="form-control" id="movie" type="text" placeholder="Casablanca">
+                        <label for="rating">Enter a min Rating</label>
+                        <input class="form-control" id="rating" type="number" placeholder="7.0">
+                        <label for="genre">Enter a Genre</label>
+                        <input class="form-control" id="genre" type="text" placeholder="Horror">
+                      </li>
+                    </ul>
+                  </div>
+                  <button id="filter-btn" type="button" class="btn btn-default">Filter Table</button>
+                </form>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="col-md-10">
+          <div id="table-area" class="">
+     
+      <table id="movie-table" class="table datatable">
+         <thead>
+             <tr>
+                 <th data-field="Name" data-sortable="true">Name</th>
+                 <th data-field="averageRating" data-sortable="true">Average Rating</th>
+                 <th data-field="characters" data-sortable="true">Characters</th>
+                 <th data-field="genres" data-sortable="true">Genres</th>
+                 <th data-field="movieTitle" data-sortable="true">Movie Title</th>
+                 <th data-field="numVotes" data-sortable="true">Number of Votes</th>
+                 <th data-field="role" data-sortable="true">Role</th>
+                 <th data-field="runtimeMinutes" data-sortable="true">Duration</th>
+                 <th data-field="startYear" data-sortable="true">Year</th>
+             </tr>
+         </thead>
+         <tbody>
+             <tr>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+                 <td></td>
+             </tr>
+         </tbody>
+     </table>
+         </div>
+        </div>
+      </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.11.0/d3.js"></script>
+  <script src="../static/app.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://raw.github.com/douglascrockford/JSON-js/master/json2.js"></script>
+<script src="{{url_for('static', filename='app.js')}}"></script>
+</body>
+
+</html>
