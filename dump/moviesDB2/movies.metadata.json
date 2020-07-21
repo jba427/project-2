@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"moviesDB2.movies"}],"uuid":"7e352525f49c4363b47983c54a237b87"}
