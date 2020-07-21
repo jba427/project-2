@@ -9,7 +9,7 @@ import json
 app = Flask(__name__)
 
 # connect to your DB w/heroku or local
-app.config['MONGODB_URI'] = os.environ.get("MONGODB_URI") or "mongodb://localhost:27017/moviesDB2.movies"
+# app.config['MONGODB_URI'] = os.environ.get("MONGODB_URI") or "mongodb://localhost:27017/moviesDB2.movies"
 
 
 # # Use PyMongo to establish Mongo connection
