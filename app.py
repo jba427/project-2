@@ -14,9 +14,9 @@ app = Flask(__name__)
 
 # # Use PyMongo to establish Mongo connection
 # mongo = PyMongo(app, uri="mongodb://localhost:27017/moviesDB2")
-client = MongoClient('mongodb://localhost:27017/')
-mydb = client['moviesDB2']
-mytable = mydb['movies']
+## client = MongoClient('mongodb://localhost:27017/')
+## mydb = client['moviesDB2']
+## mytable = mydb['movies']
 
 
 @app.route('/data')   
