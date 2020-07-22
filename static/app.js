@@ -500,6 +500,6 @@ var chartGroup = svg.append("g")
 
   }).catch(function(error) {
   console.log(error);
-}));
+});
 
 
